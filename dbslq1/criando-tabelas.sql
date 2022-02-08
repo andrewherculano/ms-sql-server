@@ -1,3 +1,4 @@
+-- table alunos
 create table Alunos (
 	idAluno int primary key not null,
 	nomeAluno varchar(200) not null,
@@ -7,6 +8,7 @@ create table Alunos (
 	loginCadastro varchar(15) not null,
 );
 
+-- table situação
 create table Situacao (
 	idSituacao int primary key not null,
 	situacao varchar(25) not null,
@@ -14,6 +16,7 @@ create table Situacao (
 	loginCadastro varchar(15) not null
 );
 
+-- table cursos
 create table Cursos (
 	idCurso int primary key not null,
 	nomeCurso varchar(200) not null,
@@ -21,6 +24,7 @@ create table Cursos (
 	loginCadastro varchar(15) not null
 );
 
+-- table turmas
 create table Turmas (
 	idTurma int primary key not null,
 	idAluno int not null,
@@ -33,6 +37,11 @@ create table Turmas (
 	loginCadastro varchar(15) not null
 );
 
+alter table Turmas add constraint fkAlunos foreign key (idAluno) references Alunos (idAluno);
+
+alter table Turmas add constraint fkCurso foreign key (idCurso) references Cursos (idCurso);
+
+-- table registros presenças
 create table RegistroPresenca (
 	idTurma int not null,
 	idAluno int not null,
@@ -41,3 +50,9 @@ create table RegistroPresenca (
 	dataCadastro datetime not null,
 	loginCadastro varchar(15) not null
 );
+
+alter table RegistroPresenca add constraint fkTurmas foreign key (idTurma) references Turmas (idTurma);
+
+alter table RegistroPresenca add constraint fkAluno foreign key (idAluno) references Alunos (idAluno);
+
+alter table RegistroPresenca add constraint fkSituacao foreign key (idSituacao) references Situacao (idSituacao);
